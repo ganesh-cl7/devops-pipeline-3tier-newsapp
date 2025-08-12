@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend_flask
+    env_file:
+      - ${ENV_FILE}
+    ports:
+      - "${BACKEND_PORT:-5000}:$BACKEND_PORT"
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend_react
+   

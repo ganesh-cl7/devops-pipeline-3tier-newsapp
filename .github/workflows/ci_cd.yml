@@ -1,0 +1,96 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  backend_flask:
+    name: Backend (Flask)
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - uses: actions/checkout@v3
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      # Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+
+      # Step 3: Lint Python code
+      #### 
+
+
+      # Step 4: Run Python tests
+      ####
+
+
+
+
+  frontend_react:
+    name: Frontend (React)
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      # Install Node dependencies (assuming frontend app is in the "frontend" directory)
+      - name: Install Node dependencies
+        working-directory: ./frontend_react
+        run: |
+          if [ -f package.json ]; then npm install; fi
+
+
+
+  deploy:
+    name: Deploy & Push to Docker Hub
+    needs: [backend_flask, frontend_react]
+    runs-on: ubuntu-latest
+    # Important step - add your environment name
+    # environment: PROD
+    steps:
+        - uses: actions/checkout@v3
+
+        # Optional: List repository files to verify the docker-compose file exists
+        - name: List repository files
+          run: ls -al
+
+    # Step 7: Build docker image 
+    # Go to dockerhub.com
+    # Create a new repository - backend_flask
+    # Create a new access token - <access_token>
+    # Note down your username - <username>
+    # Add the following secrets to your GitHub repository - Environment (name = TEST)
+    # add the Environment name to the deploy job above (important step)
+    # https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
+    #### 
+
+    
+
+    # Step 8: # Log in to Docker Hub
+    #### 
+
+
+
+
+    # Step 8: Push docker image to dockerhub
+    ####
+
+
+
