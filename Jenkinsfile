@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         TARGET = "local"
-        PATH = "/var/jenkins_home:$PATH"
+        PATH = "/var/jenkins_home:${env.PATH}"
     }
     stages {
         stage('Checkout') {
@@ -21,6 +21,17 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
+        success {
+            echo 'Deployment succeeded!'
+        }
+        failure {
+            echo 'Deployment failed. Please check the logs.'
         }
     }
 }
